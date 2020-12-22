@@ -1,0 +1,8 @@
+{
+    "types" : [
+        {"id":"0", "label":"--"},
+        {"id":"1", "label":"Student"},
+        {"id":"2", "label":"Teacher"},
+        {"id":"3", "label":"Admin"}
+    ]
+}
