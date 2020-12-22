@@ -48,10 +48,10 @@ const AdminHeader = ({ props }) => {
                                         </NavLink>
                                     </li>
                                     <li className="nav-item">
-                                        <NavLink className="nav-link" activeClassName="is-active" to="#" >Teachers</NavLink>
+                                        <NavLink className="nav-link" activeClassName="is-active" to="/admin-teacher" >Teachers</NavLink>
                                     </li>
                                     <li className="nav-item">
-                                        <NavLink className="nav-link" activeClassName="is-active" to="#">Students</NavLink>
+                                        <NavLink className="nav-link" activeClassName="is-active" to="/admin-student">Students</NavLink>
                                     </li>
                                     <li className="nav-item">
                                         <NavLink className="nav-link" activeClassName="is-active" to="/admin-subject">Subjects</NavLink>
