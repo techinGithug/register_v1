@@ -27,6 +27,7 @@ router.get('/subjects', authenticateToken, (req, res) => {
           sql += "      sj.sj_code, ";
           sql += "      sj.sj_name, ";
           sql += "      sj.sj_credit, ";
+          sql += "      sj.sj_teacher, ";
           sql += "      (select t_firstname ";
           sql += "          from register_v1.teachers ";
           sql += "          where id = sj.sj_teacher ";
@@ -46,10 +47,25 @@ router.get('/subjects', authenticateToken, (req, res) => {
     })
 });
 
+router.post('/subject', authenticateToken, (req, res) => {
+    const { code, name, credit, teacher } = req.body
+    let sql  = " insert into register_v1.subjects (sj_code, sj_name, sj_credit, sj_teacher) ";
+        sql += " values ";
+        sql += " (?,?,?,?) "; 
+
+    const rs = db.query(sql, [code, name, credit, teacher], (err, data) => {
+        if(!err) {
+            res.send({"message":"Add new subject successful"})
+        } else {
+            res.send(err)
+        }
+    })
+
+});
+
 router.get('/teachers', authenticateToken, (req, res) => {
-    const condition = "0";
     let sql = " select * from register_v1.teachers where t_delete = ?";
-    const rs = db.query(sql, [condition], (err, row) => {
+    const rs = db.query(sql, ["0"], (err, row) => {
         if(!err) {
             res.send(row)
         } else {
@@ -60,11 +76,11 @@ router.get('/teachers', authenticateToken, (req, res) => {
 
 router.post('/teacher', authenticateToken, (req, res) => {
     const { username, password, firstname, lastname } = req.body
-    let sql  = " insert into register_v1.teachers (t_username, t_password, t_firstname, t_lastname) ";
+    let sql  = " insert into register_v1.teachers (t_username, t_password, t_firstname, t_lastname, t_delete) ";
         sql += " values ";
-        sql += " (?,?,?,?) ";
+        sql += " (?,?,?,?,?) ";
 
-    const rs = db.query(sql, [username, password, firstname, lastname], (err, data) => {
+    const rs = db.query(sql, [username, password, firstname, lastname, "0"], (err, data) => {
         if(!err) {
             res.send({"message":"Add new teacher successful"})
         } else {
@@ -73,6 +89,7 @@ router.post('/teacher', authenticateToken, (req, res) => {
     })
 });
 
+// Soft delete teacher
 router.put('/teacher', authenticateToken, (req, res) => {
     const { id } = req.body
     let sql  = " update register_v1.teachers set t_delete = ? where id = ?";
@@ -83,13 +100,41 @@ router.put('/teacher', authenticateToken, (req, res) => {
             res.send(err)
         }
     })
-})
+});
 
 router.get('/students', authenticateToken, (req, res) => {
-    let sql = " select * from register_v1.students ";
-    const rs = db.query(sql, (err, row) => {
+    let sql = " select * from register_v1.students where std_delete = ?";
+    const rs = db.query(sql, ["0"], (err, row) => {
         if(!err) {
             res.send(row)
+        } else {
+            res.send(err)
+        }
+    })
+});
+
+router.post('/student', authenticateToken, (req, res) => {
+    const { username, password, firstname, lastname } = req.body
+    let sql  = " insert into register_v1.students (std_username, std_password, std_firstname, std_lastname, std_delete) ";
+        sql += " values ";
+        sql += " (?,?,?,?,?) ";
+
+    const rs = db.query(sql, [username, password, firstname, lastname, "0"], (err, data) => {
+        if(!err) {
+            res.send({"message":"Add new student successful"})
+        } else {
+            res.send(err)
+        }
+    })
+});
+
+// Soft delete student
+router.put('/student', authenticateToken, (req, res) => {
+    const { id } = req.body
+    let sql  = " update register_v1.students set std_delete = ? where id = ?";
+    const rs = db.query(sql, ["1", id], (err, data) => {
+        if(!err) {
+            res.send({"message":"Soft delete this student successful"})
         } else {
             res.send(err)
         }

@@ -79,6 +79,7 @@ const AdminTeachers = (props) => {
             title="Add teacher"
             setIsAdd={setIsAdd}
             token={getToken()}
+            type="teacher"
         />
         <DeleteModal 
             id="deleteTeacher" 
@@ -87,6 +88,7 @@ const AdminTeachers = (props) => {
             setIsDelete={setIsDelete}
             token={getToken()}
             body="Are your sure to delete this teacher!"
+            type="teacher"
         />
         <AdminHeader props={props} />
         <div className="container w-50">
@@ -113,9 +115,6 @@ const AdminTeachers = (props) => {
                         <td>{item.t_firstname} {item.t_lastname}</td>
                         <td>
                             <button className="btn btn-success btn-sm me-1"><IoCreateOutline className="ics-1" /></button>
-                            {/* <button className="btn btn-danger btn-sm">
-                                <IoTrashOutline className="ics-1" />
-                            </button>  */}
                             <button type="button" className="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteTeacher" onClick={() => setUserId(item.id)}>
                                 <IoTrashOutline className="ics-1" />
                             </button>

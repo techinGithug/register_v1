@@ -9,6 +9,14 @@ const AdminApi = {
         return this.rootUrl+`/admin/teacher`
     },
 
+    addStudent: function() {
+        return this.rootUrl+`/admin/student`
+    },
+
+    addSubject: function() {
+        return this.rootUrl+`/admin/subject`
+    },
+
     getAllSubjects: function() {
         return this.rootUrl+`/admin/subjects`
     },
@@ -23,6 +31,10 @@ const AdminApi = {
 
     softDeleteTeacher: function() {
         return this.rootUrl+`/admin/teacher`
+    },
+
+    softDeleteStudent: function() {
+        return this.rootUrl+`/admin/student`
     }
 
 }

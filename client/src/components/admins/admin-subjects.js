@@ -8,12 +8,36 @@ import {
 import AdminApi from "../../rest-api/admin-api"
 import AppContext from "../../context/appContext"
 import AdminHeader from "../headers/admin-header"
+import AddSubjectModal from "../modal/add-subject-modal"
 
 const AdminSubjects = (props) => {
     const { getUser, getToken } = useContext(AppContext)
     const [subjectLists, setSubjectLits] = useState([])
+    const [isAdd, setIsAdd] = useState(false)
+    const [isDelete, setIsDelete] = useState(false)
 
     useEffect( async () => {
+        init()
+    }, []);
+
+    useEffect(() => {
+        if(isAdd) {
+            init()
+            setTimeout(() => {
+                setIsAdd(false)
+            }, 2000);
+        }
+
+        if(isDelete) {
+            init()
+            setTimeout(() => {
+                setIsDelete(false)
+            }, 2000);
+        }
+        
+    }, [isAdd, isDelete]);
+
+    const init = async () => {
         const user = getUser()
         if(user === null) {
             props.history.push("/")
@@ -40,14 +64,25 @@ const AdminSubjects = (props) => {
                 console.error(err)
             })
         }
-    }, [])
+    };
 
     return (
         <Fragment>
+        <AddSubjectModal 
+            id="addSubject" 
+            title="Add subject"
+            setIsAdd={setIsAdd}
+            token={getToken()}
+            type="admin"
+        />
         <AdminHeader props={props} />
         <div className="container w-50">
             <h5 className="text-center mt-5 mb-3 fw-bold">Subjects</h5>
-            <div className="d-flex justify-content-end"><button className="btn btn-primary btn-sm"><IoAddCircleOutline className="ics-3" /></button></div>
+            <div className="d-flex justify-content-end">
+                <button type="button" className="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addSubject">
+                    <IoAddCircleOutline className="ics-3" />
+                </button>
+            </div>
             <table className="table">
                 <thead>
                     <tr className="text-center">

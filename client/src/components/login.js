@@ -1,4 +1,7 @@
 import React, { Fragment, useState, useContext, useEffect } from "react"
+import { 
+    IoPersonCircleOutline
+} from "react-icons/io5"
 import axios from "axios"
 import AdminApi from "../rest-api/admin-api"
 import StudentApi from "../rest-api/student-api"
@@ -122,6 +125,28 @@ const Login = (props) => {
         })
     };
 
+    const handleSignUp = () => {
+        if(type === "" || type === "--") {
+            setMessage("Please select type before!")
+            setIsError(true)
+            setTimeOutError()
+
+        } else {
+            if(type === "Student") {
+                props.history.push("/student-signup")
+
+            } else if(type === "Teacher") {
+                // props.history.push("/teacher-signup")
+                console.log("Teacher...")
+
+            } else if(type === "Admin") {
+                console.log("Admin...")
+            }
+            
+            clearTimeOutError()
+        }
+    };
+
     const clearTimeOutError = () => {
         setMessage("")
         setIsError(false)
@@ -137,6 +162,7 @@ const Login = (props) => {
     return (
         <Fragment>
             <div className="w-25 mx-auto" style={{ marginTop: '10%'}}>
+                {/* <IoPersonCircleOutline className="mx-auto" style={{ fontSize: '150px' }} /> */}
                 <form className="mb-3" onSubmit={(e) => handleSubmit(e)}>
                     <Input 
                         label="Username" 
@@ -155,9 +181,10 @@ const Login = (props) => {
                         datas={types} 
                         value={type} 
                         onChange={(e) => setType(e.target.value)} 
+                        type="type"
                     />
-                    <button type="submit" className="btn btn-primary me-1">Login</button>
-                    <button type="button" className="btn btn-success">Register</button>
+                    <button type="submit" className="btn btn-sm btn-primary me-1">Login</button>
+                    <button type="button" className="btn btn-sm btn-success" onClick={() => handleSignUp()}>Sign up</button>
                 </form>
                 {isError ? <AlertError message={message} /> : null }
             </div>

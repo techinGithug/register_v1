@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 
-const Danger = ({ message }) => {
+const Warning = ({ message }) => {
     return (
         <Fragment>
             <div className="alert alert-warning" role="alert">
@@ -10,4 +10,4 @@ const Danger = ({ message }) => {
     )
 }
 
-export default Danger
+export default Warning

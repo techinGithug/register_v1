@@ -15,13 +15,13 @@ const Admin = (props) => {
     return (
         <Fragment>
             <AdminHeader props={props} />
-            <div className="w-25 mx-auto mt-5">
+            <div className="w-50 mx-auto mt-5">
                 <ul className="list-group">
                     <li className="list-group-item">
                         <h1>
                             <div className="d-flex bd-highlight">
                                 <div className="flex-grow-1 bd-highlight">Teachers</div>
-                                <div className="badge bg-secondary">123</div>
+                                <div className="badge bg-secondary">23</div>
                             </div>
                         </h1>
                     </li>
@@ -29,7 +29,7 @@ const Admin = (props) => {
                         <h1>
                             <div className="d-flex bd-highlight">
                                 <div className="flex-grow-1 bd-highlight">Students</div>
-                                <div className="badge bg-secondary">560</div>
+                                <div className="badge bg-secondary">68</div>
                             </div>
                         </h1>
                     </li>
@@ -37,15 +37,15 @@ const Admin = (props) => {
                         <h1>
                             <div className="d-flex bd-highlight">
                                 <div className="flex-grow-1 bd-highlight">Subjects</div>
-                                <div className="badge bg-secondary">43</div>
+                                <div className="badge bg-secondary">24</div>
                             </div>
                         </h1>
                     </li>
                     <li className="list-group-item">
                         <h1>
                             <div className="d-flex bd-highlight">
-                                <div className="flex-grow-1 bd-highlight">Register</div>
-                                <div className="badge bg-secondary">502</div>
+                                <div className="flex-grow-1 bd-highlight">Registered</div>
+                                <div className="badge bg-secondary">97</div>
                             </div>
                         </h1>
                     </li>

@@ -1,60 +1,48 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useState, useEffect } from 'react'
 import axios from "axios"
 import { 
     IoSaveOutline,
     IoCloseOutline
  } from "react-icons/io5";
  import Input from "../../components/forms/input"
+ import Select from "../../components/forms/select"
  import AdminApi from "../../rest-api/admin-api"
 
-const AddModal = ({ id, title, setIsAdd, token, type }) => {
-    const [username, setUsername] = useState("")
-    const [password, setPassword] = useState("")
-    const [firstname, setFirstname] = useState("")
-    const [lastname, setLastname] = useState("")
+const AddSubjectModal = ({ id, title, setIsAdd, token, type }) => {
+    const [teacherLists, setTeacherLists] = useState([])
+    const [code, setCode] = useState("")
+    const [name, setName] = useState("")
+    const [credit, setCredit] = useState("")
+    const [teacher, setTeacher] = useState("1")
 
-    const handleAdd = (e) => {
-        e.preventDefault()
-        switch(type) {
-            case "teacher" :
-                addTeacher()
-            break;
-
-            case "student" :
-                addStudent()
-            break;
-        }
-        
-    };
-
-    const addTeacher = async () => {
-        await axios.post(AdminApi.addTeacher(), {
-            username,
-            password,
-            firstname,
-            lastname
-        }, {
+    useEffect( async () => {
+        await axios.get(AdminApi.getAllTeachers(), {
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type':'application/json'
             }
         })
         .then((res) => {
-            console.log(res)
-            clearForm()
-            setIsAdd(true)
+            const { data } = res
+            setTeacherLists(data)
         })
         .catch((err) => {
             console.error(err)
         })
+
+    }, []);
+
+    const handleAdd = (e) => {
+        e.preventDefault()
+        addSubject()
     };
 
-    const addStudent = async () => {
-        await axios.post(AdminApi.addStudent(), {
-            username,
-            password,
-            firstname,
-            lastname
+    const addSubject = async () => {
+        await axios.post(AdminApi.addSubject(), {
+            code,
+            name,
+            credit,
+            teacher
         }, {
             headers: {
                 'Authorization': `Bearer ${token}`,
@@ -72,10 +60,10 @@ const AddModal = ({ id, title, setIsAdd, token, type }) => {
     };
 
     const clearForm = () => {
-        setUsername("")
-        setPassword("")
-        setFirstname("")
-        setLastname("")
+        setCode("")
+        setName("")
+        setCredit("")
+        // setTeacher("")
     };
 
     return (
@@ -90,32 +78,32 @@ const AddModal = ({ id, title, setIsAdd, token, type }) => {
                     <div className="modal-body">
                         <form onSubmit={(e) => handleAdd(e)}>
                             <Input
-                                label="Username"
+                                label="Code"
                                 type="text"
-                                value={username}
-                                onChange={(e) => setUsername(e.target.value)}
-                                placeholder="Username"
+                                value={code}
+                                onChange={(e) => setCode(e.target.value)}
+                                placeholder="Code"
                             />
                             <Input
-                                label="Password"
-                                type="password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                placeholder="Passoword"
+                                label="Name"
+                                type="text"
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
+                                placeholder="Subject name"
                             />
                             <Input
-                                label="Firstname"
-                                type="text"
-                                value={firstname}
-                                onChange={(e) => setFirstname(e.target.value)}
-                                placeholder="Firstname"
+                                label="Credit"
+                                type="number"
+                                value={credit}
+                                onChange={(e) => setCredit(e.target.value)}
+                                placeholder="Cridit"
                             />
-                            <Input
-                                label="Lastname"
-                                type="text"
-                                value={lastname}
-                                onChange={(e) => setLastname(e.target.value)}
-                                placeholder="Lastname"
+                            <Select 
+                                label="Teacher" 
+                                datas={teacherLists} 
+                                value={teacher} 
+                                onChange={(e) => setTeacher(e.target.value)} 
+                                type="teacher"
                             />
                              <div className="d-flex justify-content-end mt-3">
                                 <button type="submit" className="btn btn-primary btn-sm me-1"><IoSaveOutline className="ics-1" /></button>
@@ -131,4 +119,4 @@ const AddModal = ({ id, title, setIsAdd, token, type }) => {
     )
 }
 
-export default AddModal
+export default AddSubjectModal

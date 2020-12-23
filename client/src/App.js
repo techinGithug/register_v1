@@ -11,6 +11,8 @@ import AdminSubject from "./components/admins/admin-subjects"
 import AdminStudent from "./components/admins/admin-students"
 import AdminTeacher from "./components/admins/admin-teachers"
 import Student from "./components/students/student"
+import StudentSignUp from "./components/students/student-signup"
+import StudentRegister from "./components/students/student-register"
 
 const App = () => {
   return (
@@ -24,9 +26,9 @@ const App = () => {
           <Route path="/admin-student" component={AdminStudent} />
           <Route path="/admin-subject" component={AdminSubject} />  
           <Route path="/student" component={Student} />
-          {/*<Route path="/student-register" component={RegisterStudent} />
-          <Route path="/student-addData" component={AddStudentData} />
-          <Route path="/student-profile" component={StudentProfile} />
+          <Route path="/student-signup" component={StudentSignUp} />
+          <Route path="/student-register" component={StudentRegister} />
+          {/*<Route path="/student-profile" component={StudentProfile} />
           <Route path="/teacher" component={Teacher} />
           <Route path="/register-teacher" component={RegisterTeacher} /> */}
 
