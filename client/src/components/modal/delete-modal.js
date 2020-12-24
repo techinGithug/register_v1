@@ -4,10 +4,9 @@ import {
     IoCheckmarkOutline,
     IoCloseOutline
  } from "react-icons/io5";
- import Input from "../../components/forms/input"
  import AdminApi from "../../rest-api/admin-api"
 
-const DeleteModal = ({ id, title, setIsDelete, token, body, userId, type}) => {
+const DeleteModal = ({ id, title, setIsDelete, token, body, id_, type}) => {
 
     const handleDelete = () => {
         switch(type) {
@@ -22,12 +21,16 @@ const DeleteModal = ({ id, title, setIsDelete, token, body, userId, type}) => {
             case "subject" :
                 // deleteSubject()
             break;
+
+            case "registration" :
+                deleteRegistration()
+            break;
         }
     };
 
     const deleteTeacher = async () => {
         await axios.put(AdminApi.softDeleteTeacher(), {
-            id: userId
+            id: id_
         }, {
             headers: {
                 'Authorization': `Bearer ${token}`,
@@ -45,7 +48,7 @@ const DeleteModal = ({ id, title, setIsDelete, token, body, userId, type}) => {
 
     const deleteStudent = async () => {
         await axios.put(AdminApi.softDeleteStudent(), {
-            id: userId
+            id: id_
         }, {
             headers: {
                 'Authorization': `Bearer ${token}`,
@@ -64,6 +67,10 @@ const DeleteModal = ({ id, title, setIsDelete, token, body, userId, type}) => {
     // const deleteSubject = async () => {
     //     await axios.
     // };
+
+    const deleteRegistration = () => {
+        console.log(`Delete registration... ${id_}`)
+    };
 
     return (
         <Fragment>

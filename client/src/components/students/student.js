@@ -39,7 +39,10 @@ const Student = (props) => {
 
     return (
         <Fragment>
-            <StudentHeader props={props} />
+        <StudentHeader props={props} />
+        <div className="container mt-5 mb-3">
+            <h5 className="text-center">Home page student...</h5>
+        </div>
         </Fragment>
     )
 }

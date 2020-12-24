@@ -47,6 +47,28 @@ router.get('/subjects', authenticateToken, (req, res) => {
     })
 });
 
+router.get('/teachers', authenticateToken, (req, res) => {
+    let sql = " select * from register_v1.teachers where t_delete = ?";
+    const rs = db.query(sql, ["0"], (err, row) => {
+        if(!err) {
+            res.send(row)
+        } else {
+            res.send(err)
+        }
+    })
+});
+
+router.get('/students', authenticateToken, (req, res) => {
+    let sql = " select * from register_v1.students where std_delete = ?";
+    const rs = db.query(sql, ["0"], (err, row) => {
+        if(!err) {
+            res.send(row)
+        } else {
+            res.send(err)
+        }
+    })
+});
+
 router.post('/subject', authenticateToken, (req, res) => {
     const { code, name, credit, teacher } = req.body
     let sql  = " insert into register_v1.subjects (sj_code, sj_name, sj_credit, sj_teacher) ";
@@ -63,9 +85,30 @@ router.post('/subject', authenticateToken, (req, res) => {
 
 });
 
-router.get('/teachers', authenticateToken, (req, res) => {
-    let sql = " select * from register_v1.teachers where t_delete = ?";
-    const rs = db.query(sql, ["0"], (err, row) => {
+router.get('/registration', authenticateToken, (req, res) => {
+    let sql  = " select ";
+        sql += "    rg.id, ";
+        sql += "    rg.std_id, ";
+        sql += "    std.std_firstname, ";
+        sql += "    std.std_lastname, ";
+        sql += "    sj.sj_code, ";
+        sql += "    sj.sj_name, ";
+        sql += "    sj.sj_credit, ";
+        sql += "    t.t_firstname, ";
+        sql += "    t.t_lastname, ";
+        sql += "    rg.score, ";
+        sql += "    rg.grade ";
+        sql += " from ";
+        sql += "    register_v1.registers rg, ";
+        sql += "    register_v1.students std, ";
+        sql += "    register_v1.subjects sj, ";
+        sql += "    register_v1.teachers t ";
+        sql += " where rg.sj_id = sj.id ";
+        sql += " and rg.t_id = t.id ";
+        sql += " and rg.std_id = std.id ";
+        sql += " order by rg.std_id ";
+
+    const rs = db.query(sql, (err, row) => {
         if(!err) {
             res.send(row)
         } else {
@@ -96,17 +139,6 @@ router.put('/teacher', authenticateToken, (req, res) => {
     const rs = db.query(sql, ["1", id], (err, data) => {
         if(!err) {
             res.send({"message":"Soft delete this teacher successful"})
-        } else {
-            res.send(err)
-        }
-    })
-});
-
-router.get('/students', authenticateToken, (req, res) => {
-    let sql = " select * from register_v1.students where std_delete = ?";
-    const rs = db.query(sql, ["0"], (err, row) => {
-        if(!err) {
-            res.send(row)
         } else {
             res.send(err)
         }

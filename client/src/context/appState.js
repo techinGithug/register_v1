@@ -7,8 +7,7 @@ import AuthApi from "../rest-api/auth-api"
 import { 
     AUTHEN_LOGIN,
     LOGOUT,
-    REGISTER_STUDENT,
-
+    LAST_ACTION
 } from "../context/appAction";
 
 const AppState = (props) => {
@@ -35,31 +34,12 @@ const AppState = (props) => {
         
     };
 
-    const setToken = (token) => {
-        localStorage.setItem("token", JSON.stringify(token))
-    };
-
-    const getToken = () => {
-        return JSON.parse(localStorage.getItem("token"))
-    };
-
-    const clearToken = () => {
-        localStorage.removeItem("token")
-    };
-
     // Login
     const login = (details) => {
         setUserData(details)
         dispatch({
             type: AUTHEN_LOGIN,
             payload: details
-        })
-    };
-
-    const registerStudent = async (data) => {
-        dispatch({
-            type: REGISTER_STUDENT,
-            payload: data
         })
     };
 
@@ -85,6 +65,18 @@ const AppState = (props) => {
         localStorage.removeItem("user")
     };
 
+    const setToken = (token) => {
+        localStorage.setItem("token", JSON.stringify(token))
+    };
+
+    const getToken = () => {
+        return JSON.parse(localStorage.getItem("token"))
+    };
+
+    const clearToken = () => {
+        localStorage.removeItem("token")
+    };
+
     const genId = () => {
         const date = new Date()
         return (`${date.getFullYear()}${(date.getMonth()+1)}${date.getDate()}${date.getHours()}${date.getMinutes()}${date.getSeconds()}${date.getMilliseconds()}`)
@@ -106,15 +98,18 @@ const AppState = (props) => {
         localStorage.setItem("subject", data)
     };
 
+    const teacherAddScore = (data) => {
+        dispatch({
+            type: LAST_ACTION,
+            payload: data
+        })
+    };
+
     return (
         <AppContext.Provider value={{
             // Sate
             authenLogin: state.authenLogin,
-            admins: state.admins,
-            register: state.register,
-            students: state.students,
-            teachers: state.teachers,
-            userData: state.userData,
+            lastAction: state.lastAction,
             
             // Action
             authLogin,
@@ -124,10 +119,10 @@ const AppState = (props) => {
             getToken,
             login,
             logout,
-            registerStudent,
             setUserData,
             setSubjectStorage,
-            
+            teacherAddScore
+
         }}
         >
             {props.children}

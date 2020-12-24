@@ -26,8 +26,8 @@ app.use(express.json())
 router.get('/', authenticateToken, (req, res) => {
     // res.json(students.filter(student => student.username === req.user.name))
     const  name  = req.user.name
-    const sql  = "select * from register_v1.students where std_username = ?";
-    const rs =  db.query(sql, [name], (err, row) => {
+    const sql  = "select * from register_v1.students where std_username = ? and std_delete = ?";
+    const rs =  db.query(sql, [name, "0"], (err, row) => {
         if(!err) {
             res.json(row)
         } else {

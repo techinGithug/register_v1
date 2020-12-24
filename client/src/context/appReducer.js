@@ -7,7 +7,7 @@ import {
     DELETE_TEACHER,
     LOGOUT,
     AUTHEN_LOGIN,
-    REGISTER_STUDENT
+    LAST_ACTION
  } from "../context/appAction";
 
  const appReducer = (state, action) => {
@@ -53,15 +53,18 @@ import {
 
             };
 
-        case REGISTER_STUDENT:
-            return {
-                ...state,
-                students: [...state.students, action.payload]
-            };
-
         case UPDATE_STUDENT :
             return {
 
+            };
+
+        case LAST_ACTION : 
+            return {
+                ...state,
+                lastAction: {
+                    "action":`Add score`,
+                    "data": action.payload,
+                }
             };
 
         default :

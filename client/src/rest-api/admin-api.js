@@ -25,6 +25,10 @@ const AdminApi = {
         return this.rootUrl+`/admin/teachers`
     },
 
+    getAllRegistration: function() {
+        return this.rootUrl+`/admin/registration`
+    },
+
     getAllStudents: function() {
         return this.rootUrl+`/admin/students`
     }, 

@@ -6,6 +6,7 @@ const cors = require('cors')
 const jwt = require("jsonwebtoken")
 
 const student = require('./router/student')
+const teacher = require('./router/teacher')
 const admin = require('./router/admin')
 
 app.use(cors())
@@ -26,6 +27,7 @@ function generateAccessToken(user) {
 // ROUTER //
 app.use('/admin', admin)
 app.use('/student', student)
+app.use('/teacher', teacher)
 
 
 app.listen(3001, (err) => {

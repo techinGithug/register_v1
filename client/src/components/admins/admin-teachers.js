@@ -3,7 +3,7 @@ import axios from "axios"
 import { 
     IoTrashOutline,
     IoCreateOutline,
-    IoAddCircleOutline
+    IoAddOutline
  } from "react-icons/io5";
 import AdminApi from "../../rest-api/admin-api"
 import AppContext from "../../context/appContext"
@@ -95,7 +95,7 @@ const AdminTeachers = (props) => {
             <h5 className="text-center mt-5 mb-3 fw-bold">Teachers</h5>
             <div className="d-flex justify-content-end">
                 <button type="button" className="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addTeacher">
-                    <IoAddCircleOutline className="ics-3" />
+                    <IoAddOutline className="ics-3" />
                 </button>
             </div>
             <table className="table">

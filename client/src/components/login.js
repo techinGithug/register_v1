@@ -1,10 +1,11 @@
-import React, { Fragment, useState, useContext, useEffect } from "react"
+import React, { Fragment, useState, useContext } from "react"
 import { 
     IoPersonCircleOutline
 } from "react-icons/io5"
 import axios from "axios"
 import AdminApi from "../rest-api/admin-api"
 import StudentApi from "../rest-api/student-api"
+import TeacherApi from "../rest-api/teacher-api"
 import AlertError from "../components/alerts/danger"
 import Input from "./forms/input"
 import Select from "./forms/select"
@@ -18,10 +19,6 @@ const Login = (props) => {
     const [type, setType] = useState("")
     const [isError, setIsError] = useState(false)
     const [message, setMessage] = useState("")
-
-    // useEffect(() => {
-    //     console.log(type)
-    // }, [type])
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -37,7 +34,9 @@ const Login = (props) => {
                 studentLogin(token)
 
             } else if(type === "Teacher") {
-                console.log(type)
+                await authLogin(username)
+                const token = await getToken()
+                teacherLogin(token)
 
             } else if(type === "Admin") {
                 await authLogin(username)
@@ -69,6 +68,44 @@ const Login = (props) => {
                         };
                         login(details)
                         props.history.push("/student")
+
+                    } else {
+                        setMessage("Username or password incorrect!")
+                        setIsError(true)
+                        setTimeOutError()
+                    }
+
+                } else if(data.length === 0){
+                    setMessage("Not fund this user!")
+                    setIsError(true)
+                    setTimeOutError()
+                }
+            })
+            .catch((err) => {
+                console.error(err)
+            })
+    };
+
+    const teacherLogin = async (token) => {
+        await axios.get(TeacherApi.teacher(), {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type':'application/json'
+                }
+            })
+            .then((res) => {
+                // console.log(res)
+                const { data } = res
+                if(data.length > 0) {
+                    const {t_username: username_, t_password: password_ } = data[0]
+                    if(username === username_ && password === password_) {
+                        const details = {
+                            token,
+                            isLogin: true,
+                            userData: data[0]
+                        };
+                        login(details)
+                        props.history.push("/teacher")
 
                     } else {
                         setMessage("Username or password incorrect!")
