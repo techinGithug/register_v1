@@ -37,6 +37,7 @@ const StudentSignUp = (props) => {
     return (
         <Fragment>
             <div className="w-25 mx-auto mt-5 mb-3">
+                <div className="text-center fs-4 mb-3">Register student</div>
                 <form onSubmit={(e) => handleSignUp(e)}>
                     <Input
                         label="Username"

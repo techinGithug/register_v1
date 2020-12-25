@@ -60,9 +60,9 @@ router.get('/students', authenticateToken, (req, res) => {
 });
 
 router.put('/score', authenticateToken, (req, res) => {
-    const { id, score, grade } = req.body
-    let sql  = " update register_v1.registers set score = ?, grade = ? where id = ?";
-    const rs = db.query(sql, [score, grade, id], (err, data) => {
+    const { id, score, grade, grade_ } = req.body
+    let sql  = " update register_v1.registers set score = ?, grade = ?, grade_ = ? where id = ?";
+    const rs = db.query(sql, [score, grade, grade_, id], (err, data) => {
         if(!err) {
             res.send({"message":"Add score successful"})
         } else {

@@ -7,8 +7,6 @@ import {
 import AdminApi from "../../rest-api/admin-api"
 import AppContext from "../../context/appContext"
 import AdminHeader from "../headers/admin-header"
-// import AddModal from "../../components/modal/add-modal"
-import DeleteModal from "../../components/modal/delete-modal"
 
 const AdminRegistration = (props) => {
     const { getUser, getToken } = useContext(AppContext)
@@ -68,15 +66,6 @@ const AdminRegistration = (props) => {
 
     return (
         <Fragment>
-        {/* <DeleteModal 
-            id="deleteRegistration" 
-            id_={registId}
-            title="Delete registration"
-            setIsDelete={setIsDelete}
-            token={getToken()}
-            body="Are your sure to delete this registration!"
-            type="registration"
-        /> */}
         <AdminHeader props={props} />
         <div className="container w-50 mt-3 mb-5">
             <div className="w-50 mx-auto mb-3">

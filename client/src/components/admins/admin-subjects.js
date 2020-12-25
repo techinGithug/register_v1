@@ -87,7 +87,7 @@ const AdminSubjects = (props) => {
                 <thead>
                     <tr className="text-center">
                         <th scope="col" width="100">Code</th>
-                        <th scope="col" width="300">Name</th>
+                        <th scope="col" width="200">Name</th>
                         <th scope="col" width="50">Crdit</th>
                         <th scope="col">Teacher</th>
                         <th scope="col" width="92"></th>

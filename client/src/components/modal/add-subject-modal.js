@@ -50,7 +50,7 @@ const AddSubjectModal = ({ id, title, setIsAdd, token, type }) => {
             }
         })
         .then((res) => {
-            console.log(res)
+            // console.log(res)
             clearForm()
             setIsAdd(true)
         })

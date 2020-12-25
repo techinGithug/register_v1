@@ -82,11 +82,16 @@ const AddModal = ({ id, title, setIsAdd, token, type }) => {
     const addScore = async (e) => {
         e.preventDefault()
         const { id } = lastAction.data
-        const grade = calGrade()
+        const { grade, grade_ } = calGrade()
+        if(grade_ === "**" && grade_ === "**") {
+            console.log("Grade inccorect!")
+            return
+        }
         await axios.put(TeacherApi.score(), {
                 id,
                 score,
-                grade
+                grade,
+                grade_
             }, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -101,7 +106,6 @@ const AddModal = ({ id, title, setIsAdd, token, type }) => {
             .catch((err) => {
                 console.error(err)
             })
-
     };
 
     const clearForm = () => {
@@ -116,19 +120,34 @@ const AddModal = ({ id, title, setIsAdd, token, type }) => {
     };
 
     const calGrade = () => {
-        let grade = ""
+        let data = {
+            "grade":"",
+            "grade_":""
+        };
+
+        // let grade = ""
+        // let grade_ = ""
         if(score < 50) {
-            grade = "F"
+            data.grade = "F"
+            data.grade_ = "0"
         } else if(score > 50 && score <= 60){
-            grade = "D"
+            data.grade = "D"
+            data.grade_ = "1"
         } else if(score > 60 && score <= 70){
-            grade = "C"
+            data.grade = "C"
+            data.grade_ = "2"
         } else if(score > 70 && score <= 80){
-            grade = "B"
-        } else if(score > 80) {
-            grade = "A"
+            data.grade = "B"
+            data.grade_ = "3"
+        } else if(score > 80 && score <= 100) {
+            data.grade = "A"
+            data.grade_ = "4"
+        } else {
+            data.grade = "**"
+            data.grade_ = "**"
         }
-        return grade
+
+        return data
     }
 
     const renderModalBody = () => {

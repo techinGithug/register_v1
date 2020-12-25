@@ -15,6 +15,10 @@ const StudentApi = {
 
     getRegistration: function() {
         return this.rootUrl+`/student/register`
+    },
+
+    getSchoolRecord: function() {
+        return this.rootUrl+`/student/schoolRecord`
     }
 
 }
