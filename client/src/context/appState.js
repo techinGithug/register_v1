@@ -5,28 +5,27 @@ import AppReducer from "../context/appReducer"
 import InitialState from "../context/initialState"
 import AuthApi from "../rest-api/auth-api"
 import { 
-    AUTHEN_LOGIN,
+    ADD_LOG,
+    LOGIN,
     LOGOUT,
-    LAST_ACTION
+    LAST_ACTION,
 } from "../context/appAction";
 
 const AppState = (props) => {
     const [state, dispatch] = useReducer(AppReducer, InitialState)
-    // Add student
-
-    // Update student
-
-    // Delete student
 
     // Authen login
-    const authLogin = async (username) => {
+    const authLogin = async (username, type) => {
         await axios.post(AuthApi.authLogin(), {
-                username
+                username,
+                type
             })
             .then((res) => {
                 // console.log(res)
                 const { data } = res
-                setToken(data.accessToken)
+                if(data !== "") {
+                    setToken(data.accessToken)
+                }
             })
             .catch((err) => {
                 console.error(err)
@@ -35,11 +34,11 @@ const AppState = (props) => {
     };
 
     // Login
-    const login = (details) => {
-        setUserData(details)
+    const login = (loginData) => {
+        setUserData(loginData)
         dispatch({
-            type: AUTHEN_LOGIN,
-            payload: details
+            type: LOGIN,
+            payload: loginData
         })
     };
 
@@ -52,34 +51,58 @@ const AppState = (props) => {
         })
     };
 
-    // GENERAL //
-    const setUserData = (data) => {
-        localStorage.setItem("user", JSON.stringify(data))
+    const teacherAddScore = (data) => {
+        dispatch({
+            type: LAST_ACTION,
+            payload: data
+        })
     };
 
-    const getUser = () => {
-        return JSON.parse(localStorage.getItem("user"))
+    const addLog = (logData) => {
+        // console.log(JSON.stringify(logData))
+        saveLog(logData)
+        // dispatch({
+        //     type: ADD_LOG,
+        //     payload: logData
+        // })
+    };
+
+    // GENERAL //
+    const clearToken = () => {
+        localStorage.removeItem("token")
     };
 
     const clearUserData = () => {
         localStorage.removeItem("user")
     };
 
-    const setToken = (token) => {
-        localStorage.setItem("token", JSON.stringify(token))
+    const getUser = () => {
+        return JSON.parse(localStorage.getItem("user"))
     };
 
     const getToken = () => {
         return JSON.parse(localStorage.getItem("token"))
     };
 
-    const clearToken = () => {
-        localStorage.removeItem("token")
-    };
-
     const genId = () => {
         const date = new Date()
         return (`${date.getFullYear()}${(date.getMonth()+1)}${date.getDate()}${date.getHours()}${date.getMinutes()}${date.getSeconds()}${date.getMilliseconds()}`)
+    };
+
+    const setUserData = (data) => {
+        localStorage.setItem("user", JSON.stringify(data))
+    };
+
+    const setToken = (token) => {
+        localStorage.setItem("token", JSON.stringify(token))
+    };
+
+    const setSubjectStorage = (data) => {
+        localStorage.setItem("subject", data)
+    };
+
+    const saveLog = (logData) => {
+        // console.log(JSON.stringify(logData))
     };
 
     // const genToken = () => {
@@ -93,26 +116,18 @@ const AppState = (props) => {
     //     } 
     //     return pass
     // };
-
-    const setSubjectStorage = (data) => {
-        localStorage.setItem("subject", data)
-    };
-
-    const teacherAddScore = (data) => {
-        dispatch({
-            type: LAST_ACTION,
-            payload: data
-        })
-    };
+    
 
     return (
         <AppContext.Provider value={{
             // Sate
-            authenLogin: state.authenLogin,
+            loginData: state.loginData,
             lastAction: state.lastAction,
+            // logData: state.logData,
             
             // Action
             authLogin,
+            addLog,
             clearUserData,
             genId,
             getUser,

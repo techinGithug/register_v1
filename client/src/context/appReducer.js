@@ -6,16 +6,17 @@ import {
     UPDATE_TEACHER,
     DELETE_TEACHER,
     LOGOUT,
-    AUTHEN_LOGIN,
-    LAST_ACTION
+    LOGIN,
+    LAST_ACTION,
+    ADD_LOG
  } from "../context/appAction";
 
  const appReducer = (state, action) => {
     switch(action.type) {
-        case AUTHEN_LOGIN :
+        case LOGIN :
             return {
                 ...state,
-                authenLogin: {
+                loginData: {
                     token: action.payload.token, 
                     isLogin: action.payload.isLogin,
                     userData: action.payload.userData
@@ -31,6 +32,12 @@ import {
             return {
 
             };
+
+        case ADD_LOG :
+            return{
+                ...state,
+                logData: [{logs: action.payload}]
+            };
     
         case DELETE_STUDENT :
             return {
@@ -45,7 +52,7 @@ import {
         case LOGOUT: 
             return {
                 ...state,
-                authenLogin: {token:"", isLogin:false, userData:[]}
+                loginData: {token:"", isLogin:false, userData:[]}
             };
 
         case UPDATE_TEACHER :

@@ -69,22 +69,6 @@ router.get('/students', authenticateToken, (req, res) => {
     })
 });
 
-router.post('/subject', authenticateToken, (req, res) => {
-    const { code, name, credit, teacher } = req.body
-    let sql  = " insert into register_v1.subjects (sj_code, sj_name, sj_credit, sj_teacher) ";
-        sql += " values ";
-        sql += " (?,?,?,?) "; 
-
-    const rs = db.query(sql, [code, name, credit, teacher], (err, data) => {
-        if(!err) {
-            res.send({"message":"Add new subject successful"})
-        } else {
-            res.send(err)
-        }
-    })
-
-});
-
 router.get('/registration', authenticateToken, (req, res) => {
     let sql  = " select ";
         sql += "    rg.id, ";
@@ -117,6 +101,77 @@ router.get('/registration', authenticateToken, (req, res) => {
     })
 });
 
+router.get('/countAdmin', authenticateToken, (req, res) => {
+    let sql  = "select count(id) as admin from register_v1.admins"
+    const rs = db.query(sql, (err, row) => {
+        if(!err) {
+            res.send(row)
+        } else {
+            res.send(err)
+        }
+    })
+});
+
+router.get('/countTeacher', authenticateToken, (err, res) => {
+    let sql  = "select count(id) as teacher from register_v1.teachers"
+    const rs = db.query(sql, (err, row) => {
+        if(!err) {
+            res.send(row)
+        } else {
+            res.send(err)
+        }
+    })
+});
+
+router.get('/countStudent', authenticateToken, (err, res) => {
+    let sql  = "select count(id) as student from register_v1.students"
+    const rs = db.query(sql, (err, row) => {
+        if(!err) {
+            res.send(row)
+        } else {
+            res.send(err)
+        }
+    })
+});
+
+router.get('/countSubject', authenticateToken, (err, res) => {
+    let sql  = "select count(id) as subject from register_v1.subjects"
+    const rs = db.query(sql, (err, row) => {
+        if(!err) {
+            res.send(row)
+        } else {
+            res.send(err)
+        }
+    })
+});
+
+router.get('/countRegistration', authenticateToken, (err, res) => {
+    let sql  = "select count(id) as registration from register_v1.registers"
+    const rs = db.query(sql, (err, row) => {
+        if(!err) {
+            res.send(row)
+        } else {
+            res.send(err)
+        }
+    })
+});
+
+router.post('/subject', authenticateToken, (req, res) => {
+    const { code, name, credit, teacher } = req.body
+    let sql  = " insert into register_v1.subjects (sj_code, sj_name, sj_credit, sj_teacher) ";
+        sql += " values ";
+        sql += " (?,?,?,?) "; 
+
+    const rs = db.query(sql, [code, name, credit, teacher], (err, data) => {
+        if(!err) {
+            res.send({"message":"Add new subject successful"})
+        } else {
+            res.send(err)
+        }
+    })
+
+});
+
 router.post('/teacher', authenticateToken, (req, res) => {
     const { username, password, firstname, lastname } = req.body
     let sql  = " insert into register_v1.teachers (t_username, t_password, t_firstname, t_lastname, t_delete) ";
@@ -132,19 +187,6 @@ router.post('/teacher', authenticateToken, (req, res) => {
     })
 });
 
-// Soft delete teacher
-router.put('/teacher', authenticateToken, (req, res) => {
-    const { id } = req.body
-    let sql  = " update register_v1.teachers set t_delete = ? where id = ?";
-    const rs = db.query(sql, ["1", id], (err, data) => {
-        if(!err) {
-            res.send({"message":"Soft delete this teacher successful"})
-        } else {
-            res.send(err)
-        }
-    })
-});
-
 router.post('/student', authenticateToken, (req, res) => {
     const { username, password, firstname, lastname } = req.body
     let sql  = " insert into register_v1.students (std_username, std_password, std_firstname, std_lastname, std_delete) ";
@@ -154,6 +196,19 @@ router.post('/student', authenticateToken, (req, res) => {
     const rs = db.query(sql, [username, password, firstname, lastname, "0"], (err, data) => {
         if(!err) {
             res.send({"message":"Add new student successful"})
+        } else {
+            res.send(err)
+        }
+    })
+});
+
+// Soft delete teacher
+router.put('/teacher', authenticateToken, (req, res) => {
+    const { id } = req.body
+    let sql  = " update register_v1.teachers set t_delete = ? where id = ?";
+    const rs = db.query(sql, ["1", id], (err, data) => {
+        if(!err) {
+            res.send({"message":"Soft delete this teacher successful"})
         } else {
             res.send(err)
         }

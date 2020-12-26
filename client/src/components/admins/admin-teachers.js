@@ -98,7 +98,7 @@ const AdminTeachers = (props) => {
                     <IoAddOutline className="ics-3" />
                 </button>
             </div>
-            <table className="table">
+            <table className="table table-hover">
                 <thead>
                     <tr className="text-center">
                         <th scope="col" width="">Username</th>

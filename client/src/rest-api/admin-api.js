@@ -17,6 +17,26 @@ const AdminApi = {
         return this.rootUrl+`/admin/subject`
     },
 
+    countAdmin: function() {
+        return this.rootUrl+`/admin/countAdmin`
+    },
+
+    countTeacher: function() {
+        return this.rootUrl+`/admin/countTeacher`
+    },
+
+    countStudent: function() {
+        return this.rootUrl+`/admin/countStudent`
+    },
+
+    countSubject: function() {
+        return this.rootUrl+`/admin/countSubject`
+    },
+
+    countRegistration: function() {
+        return this.rootUrl+`/admin/countRegistration`
+    },
+
     getAllSubjects: function() {
         return this.rootUrl+`/admin/subjects`
     },

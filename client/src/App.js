@@ -16,6 +16,7 @@ import StudentSignUp from "./components/students/student-signup"
 import StudentRegister from "./components/students/student-register"
 import Teacher from "./components/teachers/teacher"
 import TeacherStudent from "./components/teachers/teacher-registrations"
+import TeacherSubject from "./components/teachers/teacher-subjects"
 
 const App = () => {
   return (
@@ -31,10 +32,9 @@ const App = () => {
           <Route path="/student" component={Student} />
           <Route path="/student-signup" component={StudentSignUp} />
           <Route path="/student-register" component={StudentRegister} />
-          {/* <Route path="/student-profile" component={StudentProfile} /> */}
           <Route path="/teacher" component={Teacher} />
           <Route path="/teacher-registration" component={TeacherStudent} />
-
+          <Route path="/teacher-subject" component={TeacherSubject} />
         </Switch>
       </AppState>
     </Router>

@@ -22,7 +22,16 @@ router.get('/', authenticateToken, (req, res) => {
 });
 
 router.get('/subjects', authenticateToken, (req, res) => {
-
+    const { id } = req.query
+    console.log(id)
+    let sql  = "select * from register_v1.subjects where sj_teacher = ?";
+    const rs = db.query(sql, [id], (err, row) => {
+        if(!err) {
+            res.send(row)
+        } else {
+            res.send(err)
+        }
+    })
 });
 
 router.get('/students', authenticateToken, (req, res) => {

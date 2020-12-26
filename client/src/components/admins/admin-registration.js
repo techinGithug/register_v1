@@ -1,7 +1,7 @@
 import React, { Fragment, useContext, useEffect, useState } from 'react'
 import axios from "axios"
 import { 
-    IoTrashOutline,
+    // IoTrashOutline,
     IoSearchOutline
  } from "react-icons/io5";
 import AdminApi from "../../rest-api/admin-api"
@@ -11,7 +11,7 @@ import AdminHeader from "../headers/admin-header"
 const AdminRegistration = (props) => {
     const { getUser, getToken } = useContext(AppContext)
     const [registrationLists, setRegistrationLits] = useState([])
-    const [registId, setRegistId] = useState("")
+    // const [registId, setRegistId] = useState("")
     const [student, setStudent] = useState("")
     const [isDelete, setIsDelete] = useState(false)
 
@@ -81,7 +81,7 @@ const AdminRegistration = (props) => {
                 </form>
             </div>
             <h5 className="text-center mb-3 fw-bold">Registration</h5>
-            <table className="table">
+            <table className="table table-hover">
                 <thead>
                     <tr className="text-center">
                         <th scope="col" width="100">Code</th>

@@ -53,7 +53,7 @@ const TeacherHeader = ({ props }) => {
                                         <NavLink className="nav-link" activeClassName="is-active" to="/teacher">Home</NavLink>
                                     </li>
                                     <li className="nav-item">
-                                        <NavLink className="nav-link" activeClassName="is-active" to="#">Subject</NavLink>
+                                        <NavLink className="nav-link" activeClassName="is-active" to="/teacher-subject">Subject</NavLink>
                                     </li>
                                     <li className="nav-item">
                                         <NavLink className="nav-link" activeClassName="is-active" to="/teacher-registration">Registration</NavLink>
@@ -70,7 +70,7 @@ const TeacherHeader = ({ props }) => {
                                         <NavLink className="nav-link" activeClassName="is-active" to="#"><IoSettingsOutline className="ics-1" /></NavLink>
                                     </li>
                                     <li className="nav-item">
-                                        <a className="nav-link" href="#" onClick={() => handleLogout()}><IoLogOutOutline className="ics-2" /></a>
+                                        <NavLink className="nav-link" activeClassName="is-active" to="/" onClick={() => handleLogout()}><IoLogOutOutline className="ics-2" /></NavLink>
                                     </li>
                                 </ul>
                             </div>

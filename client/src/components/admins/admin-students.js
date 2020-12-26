@@ -16,8 +16,8 @@ const AdminStudents = (props) => {
     const [studentLists, setStudentLits] = useState([])
     const [oldUsername, setOldUsername] = useState("")
     const [oldpassword, setOldPassword] = useState("")
-    const [newUsername, setNewUsername] = useState("")
-    const [newPassword, setNewPassword] = useState("")
+    // const [newUsername, setNewUsername] = useState("")
+    // const [newPassword, setNewPassword] = useState("")
     const [userId, setUserId] = useState("")
     const [isAdd, setIsAdd] = useState(false)
     const [isDelete, setIsDelete] = useState(false)
@@ -100,7 +100,7 @@ const AdminStudents = (props) => {
                     <IoAddOutline className="ics-3" />
                 </button>
             </div>
-            <table className="table">
+            <table className="table table-hover">
                 <thead>
                     <tr className="text-center">
                         <th scope="col" width="">Username</th>

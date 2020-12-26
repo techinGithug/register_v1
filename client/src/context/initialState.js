@@ -1,6 +1,7 @@
 const InitialState = {
-    authenLogin:[],
-    lastAction:[]
+    loginData:[],
+    lastAction:[],
+    logData:[]
 };
 
 export default InitialState;

@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useContext } from "react"
-import { 
-    IoPersonCircleOutline
-} from "react-icons/io5"
+// import { 
+//     IoPersonCircleOutline
+// } from "react-icons/io5"
 import axios from "axios"
 import AdminApi from "../rest-api/admin-api"
 import StudentApi from "../rest-api/student-api"
@@ -13,7 +13,7 @@ import { types } from "../data/data.json"
 import AppContext from "../context/appContext"
 
 const Login = (props) => {
-    const { authLogin, getToken, login } = useContext(AppContext)
+    const { authLogin, getToken, login, addLog } = useContext(AppContext)
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const [type, setType] = useState("")
@@ -29,18 +29,36 @@ const Login = (props) => {
 
         } else {
             if(type === "Student") {
-                await authLogin(username)
+                await authLogin(username, type)
                 const token = await getToken()
+                if(token == null) {
+                    setMessage("Not fund this user!")
+                    setIsError(true)
+                    setTimeOutError()
+                    return
+                }
                 studentLogin(token)
 
             } else if(type === "Teacher") {
-                await authLogin(username)
+                await authLogin(username, type)
                 const token = await getToken()
+                if(token == null) {
+                    setMessage("Not fund this user!")
+                    setIsError(true)
+                    setTimeOutError()
+                    return
+                }
                 teacherLogin(token)
 
             } else if(type === "Admin") {
-                await authLogin(username)
+                await authLogin(username, type)
                 const token = await getToken()
+                if(token == null) {
+                    setMessage("Not fund this user!")
+                    setIsError(true)
+                    setTimeOutError()
+                    return
+                }
                 adminLogin(token)
             }
             
@@ -48,42 +66,57 @@ const Login = (props) => {
         }
     };
 
+    const getDate = () => {
+        const date = new Date()
+        return `${date.getFullYear()}${date.getMonth()}${date.getDate()}-${date.getHours()}${date.getMinutes()}${date.getSeconds()}`
+    }
+
     const studentLogin = async (token) => {
         await axios.get(StudentApi.student(), {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type':'application/json'
-                }
-            })
-            .then((res) => {
-                // console.log(res)
-                const { data } = res
-                if(data.length > 0) {
-                    const {std_username: username_, std_password: password_ } = data[0]
-                    if(username === username_ && password === password_) {
-                        const details = {
-                            token,
-                            isLogin: true,
-                            userData: data[0]
-                        };
-                        login(details)
-                        props.history.push("/student")
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type':'application/json'
+            }
+        })
+        .then((res) => {
+            // console.log(res)
+            const { data } = res
+            if(data.length > 0) {
+                const {std_username: username_, std_password: password_ } = data[0]
+                if(username === username_ && password === password_) {
+                    const loginData = {
+                        token,
+                        isLogin: true,
+                        userData: data[0]
+                    };
+                    const logData = {
+                        "isLogin": true,
+                        "token":token,
+                        "type":type,
+                        "action":"Login",
+                        "userData":data[0],
+                        "date":getDate()
+                    };
+                    login(loginData)
+                    addLog(logData)
+                    props.history.push("/student")
 
-                    } else {
-                        setMessage("Username or password incorrect!")
-                        setIsError(true)
-                        setTimeOutError()
-                    }
-
-                } else if(data.length === 0){
-                    setMessage("Not fund this user!")
+                } else {
+                    setMessage("Username or password incorrect!")
                     setIsError(true)
                     setTimeOutError()
                 }
-            })
-            .catch((err) => {
-                console.error(err)
-            })
+
+            } else if(data.length === 0){
+                setMessage("Not fund this user!")
+                setIsError(true)
+                setTimeOutError()
+            }
+        })
+        .catch((err) => {
+            console.error(err)
+        })
+
     };
 
     const teacherLogin = async (token) => {
@@ -99,12 +132,21 @@ const Login = (props) => {
                 if(data.length > 0) {
                     const {t_username: username_, t_password: password_ } = data[0]
                     if(username === username_ && password === password_) {
-                        const details = {
+                        const loginData = {
                             token,
                             isLogin: true,
                             userData: data[0]
                         };
-                        login(details)
+                        const logData = {
+                            "isLogin": true,
+                            "token":token,
+                            "type":type,
+                            "action":"Login",
+                            "userData":data[0],
+                            "date":getDate()
+                        };
+                        login(loginData)
+                        addLog(logData)
                         props.history.push("/teacher")
 
                     } else {
@@ -137,12 +179,21 @@ const Login = (props) => {
             if(data.length > 0) {
                 const { am_username: username_, am_password: password_ } = data[0]
                 if(username === username_ && password === password_) {
-                    const details = {
+                    const loginData = {
                         token,
                         isLogin: true,
                         userData: data[0]
                     };
-                    login(details)
+                    const logData = {
+                        "isLogin": true,
+                        "token":token,
+                        "type":type,
+                        "action":"Login",
+                        "userData":data[0],
+                        "date":getDate()
+                    };
+                    login(loginData)
+                    addLog(logData)
                     props.history.push("/admin")
 
                 } else {
